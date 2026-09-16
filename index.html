@@ -3,18 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Avaliador de Imóveis — Valor por m² no Litoral | Praia Digital</title>
-<meta name="description" content="Estime o valor de apartamentos e casas no litoral paulista com dados de R$/m² da Praia Digital para Praia Grande, Santos, Guarujá, Bertioga e outras cidades.">
-<link rel="canonical" href="https://praia.digital/avaliador-imoveis/">
-<style>body{font-family:system-ui,-apple-system,sans-serif;margin:0;background:#fff7ed;color:#431407;line-height:1.6}nav{background:#9a3412;padding:12px 20px;display:flex;gap:14px;flex-wrap:wrap}nav a{color:#ffedd5;text-decoration:none;font-weight:650}.hero{background:linear-gradient(135deg,#9a3412,#f97316);color:#fff;padding:58px 20px;text-align:center}.container{max-width:1000px;margin:auto;padding:30px 20px}.card{background:#fff;border-radius:14px;padding:24px;margin:16px 0;box-shadow:0 4px 14px #0001}label{display:block;margin:12px 0 5px;font-weight:700}input,select{width:100%;padding:11px;border:1px solid #fdba74;border-radius:8px;box-sizing:border-box}button,.cta{display:inline-block;background:#ea580c;color:#fff;border:0;padding:13px 24px;border-radius:9px;font-weight:800;text-decoration:none;cursor:pointer;margin-top:14px}table{width:100%;border-collapse:collapse}th,td{padding:9px;border-bottom:1px solid #fed7aa;text-align:left}#resultado{font-size:1.2em;font-weight:800;color:#9a3412;margin-top:16px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}footer{text-align:center;padding:24px;color:#78716c}</style>
+<title>Avaliador IA de Imóveis — Praia Digital</title>
+<meta name="description" content="Estime o valor do seu imóvel no litoral paulista com dados de mercado por cidade.">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
+  body{background:#f0f9ff;color:#0f172a;min-height:100vh}
+  header{background:linear-gradient(135deg,#0077B6,#00B4D8);color:#fff;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+  header a{color:#fff;text-decoration:none;font-weight:700}
+  .logo{font-size:1.2rem}
+  main{max-width:720px;margin:2rem auto;padding:0 1rem}
+  .card{background:#fff;border-radius:16px;padding:1.75rem;box-shadow:0 4px 24px rgba(0,60,100,.08);margin-bottom:1.5rem}
+  h1{font-size:1.6rem;color:#0077B6;margin-bottom:.4rem}
+  .sub{color:#64748b;margin-bottom:1.25rem;font-size:.95rem}
+  label{display:block;font-weight:600;font-size:.85rem;margin:1rem 0 .3rem}
+  input,select{width:100%;padding:.7rem;border:1px solid #cbd5e1;border-radius:10px;font-size:1rem}
+  .checks{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.75rem}
+  .chk{background:#f1f5f9;border-radius:999px;padding:.45rem .9rem;font-size:.85rem;cursor:pointer;display:flex;gap:.4rem;align-items:center}
+  .chk input{width:auto}
+  button{width:100%;margin-top:1.4rem;padding:.9rem;border:0;border-radius:12px;background:linear-gradient(135deg,#0077B6,#00B4D8);color:#fff;font-size:1.05rem;font-weight:800;cursor:pointer}
+  #result{display:none;margin-top:1.5rem;background:#ecfeff;border:1px solid #67e8f9;border-radius:12px;padding:1.25rem;text-align:center}
+  #valor{font-size:2rem;font-weight:800;color:#0369a1}
+  #faixa{color:#64748b;font-size:.9rem;margin-top:.3rem}
+  footer{background:#023047;color:#cbd5e1;padding:2rem 1.5rem;margin-top:3rem}
+  footer h4{color:#fff;font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.8rem}
+  .links{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem}
+  .links a{color:#90E0EF;text-decoration:none;font-size:.85rem}
+  .links a:hover{color:#fff}
+</style>
 </head>
 <body>
-<nav><a href="https://praia.digital/">🌊 Praia Digital</a><a href="https://praia.digital/apps/">Rede de Apps</a><a href="https://praia.digital/guia-litoral/">Guia do Litoral</a><a href="https://praia.digital/calculadora-custos/">Custos de Compra</a><a href="https://praia.digital/simulador-roi/">Simulador ROI</a></nav>
-<header class="hero"><h1>🏠 Avaliador de Imóveis no Litoral</h1><p>Estimativa rápida com os valores médios de mercado publicados pela Praia Digital em 2026.</p><a class="cta" href="https://praia.digital/assets/servico-avaliacao-preco-imoveis-litoral.html">Ver avaliação profissional com IA</a></header>
-<main class="container">
-<section class="card"><h2>Calcular valor estimado</h2><label>Cidade</label><select id="cidade"><option value="5800">Praia Grande — R$ 5.800/m²</option><option value="7200">Guarujá — R$ 7.200/m²</option><option value="6400">Santos — R$ 6.400/m²</option><option value="5200">São Vicente — R$ 5.200/m²</option><option value="4800">Itanhaém — R$ 4.800/m²</option><option value="4300">Mongaguá — R$ 4.300/m²</option><option value="4500">Peruíbe — R$ 4.500/m²</option><option value="6500">Ubatuba — R$ 6.500/m²</option><option value="5500">Caraguatatuba — R$ 5.500/m²</option><option value="9500">São Sebastião — R$ 9.500/m²</option><option value="9000">Ilhabela — R$ 9.000/m²</option><option value="7800">Bertioga / Riviera — R$ 7.800/m²</option></select><label>Área privativa (m²)</label><input id="area" type="number" value="65"><label>Localização</label><select id="fator"><option value="1">Quadra interna / cidade</option><option value="1.25">Perto da praia</option><option value="2">Frente para o mar</option><option value="3">Frente-mar premium</option></select><button onclick="calcular()">📐 Calcular valor de mercado</button><div id="resultado"></div></section>
-<section class="card"><h2>Índice de mercado copiado do app principal</h2><table><tr><th>Cidade</th><th>Valor médio</th><th>Valorização 12 meses</th></tr><tr><td>🏖️ Praia Grande</td><td>R$ 5.800/m²</td><td>+9,1%</td></tr><tr><td>⛰️ Guarujá</td><td>R$ 7.200/m²</td><td>+7,8%</td></tr><tr><td>🏙️ Santos</td><td>R$ 6.400/m²</td><td>+6,5%</td></tr><tr><td>🌳 São Vicente</td><td>R$ 5.200/m²</td><td>+5,3%</td></tr><tr><td>🌊 Itanhaém</td><td>R$ 4.800/m²</td><td>+8,2%</td></tr><tr><td>🏝️ Mongaguá</td><td>R$ 4.300/m²</td><td>+10,1%</td></tr><tr><td>🌿 Peruíbe</td><td>R$ 4.500/m²</td><td>+7,4%</td></tr><tr><td>🏔️ Ubatuba</td><td>R$ 6.500/m²</td><td>+9,5%</td></tr><tr><td>🌊 Caraguatatuba</td><td>R$ 5.500/m²</td><td>+9,0%</td></tr><tr><td>🏄 São Sebastião</td><td>R$ 9.500/m²</td><td>+12,0%</td></tr><tr><td>🏝️ Ilhabela</td><td>R$ 9.000/m²</td><td>+11,5%</td></tr><tr><td>🌿 Bertioga</td><td>R$ 7.800/m²</td><td>+13,0%</td></tr></table><p>Imóveis de frente para o mar podem variar entre 2x e 4x o valor médio por m².</p></section>
-<section class="grid"><div class="card"><h2>💸 Custos da compra</h2><p>Depois de estimar o valor, calcule ITBI, registro, cartório e corretagem.</p><a class="cta" href="https://praia.digital/calculadora-custos/">Abrir calculadora</a></div><div class="card"><h2>📈 ROI de temporada</h2><p>Compare o valor estimado com o rendimento potencial em Airbnb e Booking.</p><a class="cta" href="https://praia.digital/simulador-roi/">Simular rendimento</a></div><div class="card"><h2>📊 Mercado completo</h2><p>Veja relatórios, valorização e tendências por cidade.</p><a class="cta" href="https://praia.digital/guia-litoral/">Abrir Guia do Litoral</a></div></section>
-</main><footer>Parte da rede <a href="https://praia.digital/">praia.digital</a> · Conteúdo derivado do app principal</footer>
-<script>function calcular(){const m2=+document.getElementById('cidade').value,area=+document.getElementById('area').value||0,f=+document.getElementById('fator').value,v=m2*area*f;document.getElementById('resultado').innerHTML='Valor estimado: <strong>R$ '+v.toLocaleString('pt-BR',{maximumFractionDigits:0})+'</strong><br><small>Faixa de negociação: R$ '+(v*.92).toLocaleString('pt-BR',{maximumFractionDigits:0})+' a R$ '+(v*1.08).toLocaleString('pt-BR',{maximumFractionDigits:0})+'</small>'}</script>
-</body></html>
+<header>
+  <a class="logo" href="https://praia.digital/">🏖️ Praia Digital</a>
+  <a href="https://praia.digital/apps">← Todos os apps</a>
+</header>
+<main>
+  <div class="card">
+    <h1>Avaliador IA de Imóveis</h1>
+    <p class="sub">Estimativa instantânea baseada no preço médio por m² de cada cidade do litoral paulista.</p>
+    <label for="cidade">Cidade</label>
+    <select id="cidade">
+      <option value="6200">Santos</option><option value="7500">Guarujá</option>
+      <option value="5400">Praia Grande</option><option value="5800">São Vicente</option>
+      <option value="6800">Bertioga</option><option value="4700">Mongaguá</option>
+      <option value="4400">Itanhaém</option><option value="4200">Peruíbe</option>
+    </select>
+    <label for="area">Área construída (m²)</label>
+    <input type="number" id="area" value="70" min="15">
+    <label>Diferenciais</label>
+    <div class="checks">
+      <label class="chk"><input type="checkbox" id="mar"> Vista para o mar (+18%)</label>
+      <label class="chk"><input type="checkbox" id="mob"> Mobiliado (+8%)</label>
+      <label class="chk"><input type="checkbox" id="novo"> Novo/na planta (+12%)</label>
+      <label class="chk"><input type="checkbox" id="gar"> Vaga de garagem (+R$ 25 mil)</label>
+    </div>
+    <button onclick="calcular()">Calcular valor estimado</button>
+    <div id="result">
+      <div id="valor"></div>
+      <div id="faixa"></div>
+      <p style="margin-top:.8rem"><a href="https://wa.me/5511954346288" style="color:#0077B6;font-weight:700">Receber avaliação profissional gratuita →</a></p>
+    </div>
+  </div>
+</main>
+<footer>
+  <h4>Rede de apps Praia Digital</h4>
+  <div class="links">
+    <a href="https://praia.digital/simulador-roi">Simulador ROI</a>
+    <a href="https://praia.digital/simulador-credito">Simulador Crédito</a>
+    <a href="https://praia.digital/calculadora-custos">Custos de Compra</a>
+    <a href="https://praia.digital/calculadoras">Calculadoras</a>
+    <a href="https://praia.digital/ferramentas">Kit do Anfitrião</a>
+    <a href="https://praia.digital/gerador-descricoes">Gerador de Descrições</a>
+    <a href="https://praia.digital/portal-corretores">Portal do Corretor</a>
+    <a href="https://praia.digital/guia-litoral">Guia do Litoral</a>
+    <a href="https://praia.digital/blog-litoral">Blog</a>
+    <a href="https://praia.digital/area-anfitriao">Área do Anfitrião</a>
+  </div>
+</footer>
+<script>
+function calcular(){
+  var m2=parseFloat(document.getElementById('cidade').value);
+  var area=parseFloat(document.getElementById('area').value)||0;
+  var v=m2*area;
+  if(document.getElementById('mar').checked)v*=1.18;
+  if(document.getElementById('mob').checked)v*=1.08;
+  if(document.getElementById('novo').checked)v*=1.12;
+  if(document.getElementById('gar').checked)v+=25000;
+  var fmt=function(n){return n.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0})};
+  document.getElementById('valor').textContent=fmt(v);
+  document.getElementById('faixa').textContent='Faixa provável: '+fmt(v*0.93)+' a '+fmt(v*1.07)+' · '+fmt(m2)+'/m² na região';
+  document.getElementById('result').style.display='block';
+}
+</script>
+</body>
+</html>
