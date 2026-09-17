@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparador de Preço por m² — Bairros | Praia Digital</title>
+<meta name="description" content="Compare o preço por m² entre bairros do litoral paulista e ache as oportunidades escondidas.">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif}
+  body{background:#f0f9ff;color:#0f172a;min-height:100vh}
+  header{background:linear-gradient(135deg,#0077B6,#00B4D8);color:#fff;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+  header a{color:#fff;text-decoration:none;font-weight:700}.logo{font-size:1.2rem}
+  main{max-width:720px;margin:2rem auto;padding:0 1rem}
+  .card{background:#fff;border-radius:16px;padding:1.75rem;box-shadow:0 4px 24px rgba(0,60,100,.08)}
+  h1{font-size:1.5rem;color:#0077B6}.sub{color:#64748b;margin:.3rem 0 1.2rem;font-size:.95rem}
+  label{font-weight:600;font-size:.85rem;display:block;margin-bottom:.3rem}
+  select{width:100%;padding:.7rem;border:1px solid #cbd5e1;border-radius:10px;font-size:1rem}
+  .bairro{margin-top:.9rem}
+  .bairro-top{display:flex;justify-content:space-between;font-size:.9rem;margin-bottom:.25rem}
+  .trilha{height:16px;background:#e2e8f0;border-radius:99px;overflow:hidden}
+  .trilha div{height:100%;background:linear-gradient(90deg,#0077B6,#00B4D8)}
+  .opp{background:#dcfce7;border:1px solid #22c55e;border-radius:8px;padding:.15rem .5rem;font-size:.72rem;font-weight:700;color:#166534}
+  .dica{margin-top:1.2rem;background:#ecfeff;border:1px solid #67e8f9;border-radius:12px;padding:1rem;font-size:.9rem}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="https://praia.digital/">🏖️ Praia Digital</a>
+  <a href="https://praia.digital/avaliador-imoveis">← Avaliador IA</a>
+</header>
+<main>
+  <div class="card">
+    <h1>📏 Comparador de m² por Bairro</h1>
+    <p class="sub">Escolha a cidade e veja onde o metro quadrado rende mais.</p>
+    <label>Cidade</label>
+    <select id="cidade" onchange="render()"></select>
+    <div id="lista"></div>
+    <div class="dica">🏠 Achou um bairro barato? Estime o valor do imóvel no <a href="https://praia.digital/avaliador-imoveis" style="color:#0077B6;font-weight:700">Avaliador IA</a> e compare cidades no <a href="https://praia.digital/guia-litoral/comparador-cidades/" style="color:#0077B6;font-weight:700">Comparador</a>.</div>
+  </div>
+</main>
+<script>
+var dados={
+  'Santos':[['Gonzaga',9800],['Boqueirão',9200],['Embaré',8500],['Aparecida',6800],['Ponta da Praia',5400]],
+  'Guarujá':[['Pitangueiras',8900],['Astúrias',7600],['Enseada',7200],['Tombo',8100],['Pernambuco',11500]],
+  'Praia Grande':[['Vila Tupi',5800],['Guilhermina',6200],['Boqueirão',5600],['Balneário Flórida',4900],['Canto do Forte',6100]],
+  'Bertioga':[['Riviera',12400],['Indaiá',6900],['Maitinga',6200],['Vista Linda',5800],['Centro',5400]]
+};
+var sel=document.getElementById('cidade');
+Object.keys(dados).forEach(function(c){sel.add(new Option(c,c))});
+function render(){
+  var arr=dados[sel.value].slice().sort(function(a,b){return b[1]-a[1]});
+  var max=arr[0][1], min=arr[arr.length-1][1];
+  document.getElementById('lista').innerHTML=arr.map(function(b){
+    var opp=b[1]===min?' <span class="opp">OPORTUNIDADE</span>':'';
+    return '<div class="bairro"><div class="bairro-top"><span><b>'+b[0]+'</b>'+opp+'</span><span>R$ '+b[1].toLocaleString('pt-BR')+'/m²</span></div><div class="trilha"><div style="width:'+(b[1]/max*100)+'%"></div></div></div>';
+  }).join('')+'<p style="margin-top:.8rem;font-size:.82rem;color:#64748b">Diferença entre o bairro mais caro e o mais barato: <b>'+Math.round((max/min-1)*100)+'%</b></p>';
+}
+render();
+</script>
+</body>
+</html>
