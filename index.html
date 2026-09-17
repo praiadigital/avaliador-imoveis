@@ -1,98 +1,47 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Avaliador IA de Imóveis — Praia Digital</title>
-<meta name="description" content="Estime o valor do seu imóvel no litoral paulista com dados de mercado por cidade.">
-<style>
-  *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
-  body{background:#f0f9ff;color:#0f172a;min-height:100vh}
-  header{background:linear-gradient(135deg,#0077B6,#00B4D8);color:#fff;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
-  header a{color:#fff;text-decoration:none;font-weight:700}
-  .logo{font-size:1.2rem}
-  main{max-width:720px;margin:2rem auto;padding:0 1rem}
-  .card{background:#fff;border-radius:16px;padding:1.75rem;box-shadow:0 4px 24px rgba(0,60,100,.08);margin-bottom:1.5rem}
-  h1{font-size:1.6rem;color:#0077B6;margin-bottom:.4rem}
-  .sub{color:#64748b;margin-bottom:1.25rem;font-size:.95rem}
-  label{display:block;font-weight:600;font-size:.85rem;margin:1rem 0 .3rem}
-  input,select{width:100%;padding:.7rem;border:1px solid #cbd5e1;border-radius:10px;font-size:1rem}
-  .checks{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.75rem}
-  .chk{background:#f1f5f9;border-radius:999px;padding:.45rem .9rem;font-size:.85rem;cursor:pointer;display:flex;gap:.4rem;align-items:center}
-  .chk input{width:auto}
-  button{width:100%;margin-top:1.4rem;padding:.9rem;border:0;border-radius:12px;background:linear-gradient(135deg,#0077B6,#00B4D8);color:#fff;font-size:1.05rem;font-weight:800;cursor:pointer}
-  #result{display:none;margin-top:1.5rem;background:#ecfeff;border:1px solid #67e8f9;border-radius:12px;padding:1.25rem;text-align:center}
-  #valor{font-size:2rem;font-weight:800;color:#0369a1}
-  #faixa{color:#64748b;font-size:.9rem;margin-top:.3rem}
-  footer{background:#023047;color:#cbd5e1;padding:2rem 1.5rem;margin-top:3rem}
-  footer h4{color:#fff;font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.8rem}
-  .links{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem}
-  .links a{color:#90E0EF;text-decoration:none;font-size:.85rem}
-  .links a:hover{color:#fff}
-</style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avaliador de Imóveis — Quanto vale seu imóvel no litoral? | Praia Digital</title>
+<meta name="description" content="Estime o valor de venda do seu imóvel no litoral paulista por R$/m², cidade, distância da praia e estado de conservação.">
+<link rel="canonical" href="https://praia.digital/avaliador-imoveis/">
+<style>:root{--azul:#0a2540;--mar:#0e7490;--areia:#f8f5ef}*{margin:0;box-sizing:border-box;font-family:system-ui,sans-serif}body{background:var(--areia);color:#1e293b}header{background:linear-gradient(135deg,var(--azul),var(--mar));color:#fff;padding:2.5rem 1.5rem;text-align:center}.badge{display:inline-block;background:rgba(255,255,255,.15);padding:.25rem .8rem;border-radius:999px;font-size:.8rem;margin-bottom:.8rem}main{max-width:720px;margin:2rem auto;padding:0 1.25rem}.card{background:#fff;border-radius:1rem;padding:1.75rem;box-shadow:0 4px 24px rgba(10,37,64,.08);margin-bottom:1.5rem}label{display:block;font-weight:600;margin:1rem 0 .35rem}input,select{width:100%;padding:.7rem;border:1px solid #cbd5e1;border-radius:.5rem;font-size:1rem}button{width:100%;margin-top:1.4rem;background:var(--mar);color:#fff;border:0;padding:.9rem;font-size:1.05rem;font-weight:700;border-radius:.6rem;cursor:pointer}#out{display:none;text-align:center}.valor{font-size:2.6rem;font-weight:800;color:var(--azul)}.faixa{color:#64748b;font-size:.95rem}.nums{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}.num{background:var(--areia);border-radius:.75rem;padding:1rem}.num b{display:block;font-size:1.3rem;color:var(--mar)}.rede{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.75rem}.rede a{background:#fff;border:1px solid #e2e8f0;border-radius:.6rem;padding:.8rem;text-decoration:none;color:var(--azul);font-weight:600;font-size:.9rem}footer{text-align:center;padding:2rem;color:#64748b;font-size:.85rem}footer a{color:var(--mar)}</style>
 </head>
 <body>
-<header>
-  <a class="logo" href="https://praia.digital/">🏖️ Praia Digital</a>
-  <a href="https://praia.digital/apps">← Todos os apps</a>
-</header>
+<header><span class="badge">🛰️ App satélite de <a href="https://praia.digital" style="color:#fff">praia.digital</a></span><h1>🏠 Avaliador de Imóveis</h1><p>Estimativa instantânea de valor de mercado no litoral paulista</p></header>
 <main>
-  <div class="card">
-    <h1>Avaliador IA de Imóveis</h1>
-    <p class="sub">Estimativa instantânea baseada no preço médio por m² de cada cidade do litoral paulista.</p>
-    <label for="cidade">Cidade</label>
-    <select id="cidade">
-      <option value="6200">Santos</option><option value="7500">Guarujá</option>
-      <option value="5400">Praia Grande</option><option value="5800">São Vicente</option>
-      <option value="6800">Bertioga</option><option value="4700">Mongaguá</option>
-      <option value="4400">Itanhaém</option><option value="4200">Peruíbe</option>
-    </select>
-    <label for="area">Área construída (m²)</label>
-    <input type="number" id="area" value="70" min="15">
-    <label>Diferenciais</label>
-    <div class="checks">
-      <label class="chk"><input type="checkbox" id="mar"> Vista para o mar (+18%)</label>
-      <label class="chk"><input type="checkbox" id="mob"> Mobiliado (+8%)</label>
-      <label class="chk"><input type="checkbox" id="novo"> Novo/na planta (+12%)</label>
-      <label class="chk"><input type="checkbox" id="gar"> Vaga de garagem (+R$ 25 mil)</label>
-    </div>
-    <button onclick="calcular()">Calcular valor estimado</button>
-    <div id="result">
-      <div id="valor"></div>
-      <div id="faixa"></div>
-      <p style="margin-top:.8rem"><a href="https://wa.me/5511954346288" style="color:#0077B6;font-weight:700">Receber avaliação profissional gratuita →</a></p>
-    </div>
-  </div>
+<div class="card">
+<label>Cidade</label><select id="cidade"><option value="9500">Guarujá</option><option value="10500">Santos</option><option value="14000">Riviera de São Lourenço</option><option value="8200">São Sebastião</option><option value="6500">Ubatuba</option><option value="5200">Caraguatatuba</option><option value="3800">Mongaguá</option><option value="3500">Itanhaém</option></select>
+<label>Área construída (m²)</label><input id="area" type="number" value="80" min="20">
+<label>Distância da praia</label><select id="praia"><option value="1.35">Frente ao mar</option><option value="1.15">Até 200 m</option><option value="1">Até 500 m</option><option value="0.85">Até 1 km</option><option value="0.7">Mais de 1 km</option></select>
+<label>Quartos</label><select id="quartos"><option value="0.95">Studio / 1</option><option value="1" selected>2</option><option value="1.05">3</option><option value="1.12">4+</option></select>
+<label>Estado de conservação</label><select id="estado"><option value="1.15">Novo / reformado</option><option value="1" selected>Bom</option><option value="0.88">Precisa de reforma leve</option><option value="0.72">Reforma pesada</option></select>
+<label>Vaga de garagem</label><select id="vaga"><option value="1.05">Sim</option><option value="1">Não</option></select>
+<button onclick="avaliar()">Avaliar imóvel</button>
+</div>
+<div class="card" id="out"><p class="faixa">Valor estimado de mercado</p><div class="valor" id="valor"></div><p class="faixa" id="range"></p><div class="nums"><div class="num"><b id="m2"></b>Valor por m²</div><div class="num"><b id="diaria"></b>Diária Airbnb potencial</div></div>
+<p style="margin-top:1rem;font-size:.9rem">Veja o score completo no <a href="https://praia.digital/praiascore">PraiaScore</a> e os custos de compra na <a href="https://praia.digital/calculadora-custos">Calculadora de Custos</a>.</p></div>
+<h2 style="margin:1.5rem 0 .8rem">🌐 Rede Praia Digital</h2>
+<div class="rede">
+<a href="https://praia.digital">🏠 Portal Praia Digital</a>
+<a href="https://praia.digital/radar-precos">📊 Radar de Preços</a>
+<a href="https://praia.digital/mapa-investidor">🗺️ Mapa do Investidor</a>
+<a href="https://praia.digital/reforma-roi">🔨 Reforma ROI</a>
+<a href="https://praia.digital/apps">🛰️ Todos os apps</a>
+</div>
 </main>
-<footer>
-  <h4>Rede de apps Praia Digital</h4>
-  <div class="links">
-    <a href="https://praia.digital/simulador-roi">Simulador ROI</a>
-    <a href="https://praia.digital/simulador-credito">Simulador Crédito</a>
-    <a href="https://praia.digital/calculadora-custos">Custos de Compra</a>
-    <a href="https://praia.digital/calculadoras">Calculadoras</a>
-    <a href="https://praia.digital/ferramentas">Kit do Anfitrião</a>
-    <a href="https://praia.digital/gerador-descricoes">Gerador de Descrições</a>
-    <a href="https://praia.digital/portal-corretores">Portal do Corretor</a>
-    <a href="https://praia.digital/guia-litoral">Guia do Litoral</a>
-    <a href="https://praia.digital/blog-litoral">Blog</a>
-    <a href="https://praia.digital/area-anfitriao">Área do Anfitrião</a>
-  </div>
-</footer>
+<footer>Feito com 🌊 pela rede <a href="https://praia.digital">Praia Digital</a> · <a href="https://github.com/praiadigital/avaliador-imoveis">código aberto no GitHub</a></footer>
 <script>
-function calcular(){
-  var m2=parseFloat(document.getElementById('cidade').value);
-  var area=parseFloat(document.getElementById('area').value)||0;
-  var v=m2*area;
-  if(document.getElementById('mar').checked)v*=1.18;
-  if(document.getElementById('mob').checked)v*=1.08;
-  if(document.getElementById('novo').checked)v*=1.12;
-  if(document.getElementById('gar').checked)v+=25000;
-  var fmt=function(n){return n.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0})};
-  document.getElementById('valor').textContent=fmt(v);
-  document.getElementById('faixa').textContent='Faixa provável: '+fmt(v*0.93)+' a '+fmt(v*1.07)+' · '+fmt(m2)+'/m² na região';
-  document.getElementById('result').style.display='block';
+const BRL=v=>'R$ '+Math.round(v).toLocaleString('pt-BR');
+function avaliar(){
+const base=+cidade.value,a=+area.value||80;
+const m2=base*(+praia.value)*(+quartos.value)*(+estado.value)*(+vaga.value);
+const total=m2*a;
+document.getElementById('out').style.display='block';
+valor.textContent=BRL(total);
+range.textContent=`Faixa provável: ${BRL(total*.92)} – ${BRL(total*1.08)}`;
+document.getElementById('m2').textContent=BRL(m2)+'/m²';
+document.getElementById('diaria').textContent=BRL(total*0.0006)+'/noite';
 }
 </script>
-</body>
-</html>
+</body></html>
